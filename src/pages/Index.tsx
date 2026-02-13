@@ -1,8 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { ExcelToolbar } from "@/components/ExcelToolbar";
 import { RoutineGridView } from "@/components/RoutineGrid";
 import { RoutineAnalysis } from "@/components/RoutineAnalysis";
+import { HistoryView } from "@/components/HistoryView";
+import { MotivationalBanner } from "@/components/MotivationalBanner";
 import { createEmptyGrid, RoutineGrid, RoutineEntry, DAYS, TIME_SLOTS } from "@/lib/routineTypes";
+import { saveGrid, loadGrid, saveSnapshot, loadHistory, DaySnapshot } from "@/lib/storage";
 
 const SAMPLE_DATA: { day: string; slot: string; entry: RoutineEntry }[] = [
   { day: "Monday", slot: "06:00", entry: { id: "1", activity: "Wake up / Stretch", category: "personal" } },
@@ -46,8 +49,18 @@ const SAMPLE_DATA: { day: string; slot: string; entry: RoutineEntry }[] = [
 ];
 
 const Index = () => {
-  const [grid, setGrid] = useState<RoutineGrid>(createEmptyGrid);
-  const [activeTab, setActiveTab] = useState<"grid" | "analysis">("grid");
+  const [grid, setGrid] = useState<RoutineGrid>(loadGrid);
+  const [activeTab, setActiveTab] = useState<"grid" | "analysis" | "history">("grid");
+  const [history, setHistory] = useState<DaySnapshot[]>(loadHistory);
+
+  // Save grid to localStorage on every change + snapshot
+  useEffect(() => {
+    saveGrid(grid);
+    saveSnapshot(grid);
+    setHistory(loadHistory());
+  }, [grid]);
+
+  const currentFilled = DAYS.reduce((acc, day) => acc + TIME_SLOTS.filter(s => grid[day]?.[s]).length, 0);
 
   const handleUpdateCell = useCallback((day: string, slot: string, entry: RoutineEntry | null) => {
     setGrid(prev => ({
@@ -74,11 +87,18 @@ const Index = () => {
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
+      <MotivationalBanner
+        history={history}
+        currentFilled={currentFilled}
+        totalSlots={DAYS.length * TIME_SLOTS.length}
+      />
       
       {activeTab === "grid" ? (
         <RoutineGridView grid={grid} onUpdateCell={handleUpdateCell} />
-      ) : (
+      ) : activeTab === "analysis" ? (
         <RoutineAnalysis grid={grid} />
+      ) : (
+        <HistoryView history={history} />
       )}
     </div>
   );

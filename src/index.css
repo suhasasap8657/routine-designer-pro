@@ -34,14 +34,14 @@
     --input: 210 18% 82%;
     --ring: 207 70% 38%;
 
-    --radius: 0.25rem;
+    --radius: 0.375rem;
 
     /* Excel-specific tokens */
-    --grid-line: 210 15% 85%;
-    --grid-header-bg: 210 15% 93%;
-    --grid-header-fg: 210 20% 30%;
-    --grid-cell-hover: 207 60% 95%;
-    --grid-cell-selected: 207 70% 90%;
+    --grid-line: 210 18% 88%;
+    --grid-header-bg: 210 20% 95%;
+    --grid-header-fg: 210 25% 25%;
+    --grid-cell-hover: 207 60% 96%;
+    --grid-cell-selected: 207 70% 92%;
     --grid-cell-active: 207 70% 38%;
 
     /* Category colors */
@@ -125,11 +125,11 @@
   }
 
   .grid-cell {
-    @apply border border-grid-line px-2 py-1.5 text-sm transition-colors cursor-pointer;
+    @apply border border-grid-line px-2 py-1.5 text-sm transition-all duration-150 cursor-pointer;
   }
 
   .grid-cell:hover {
-    @apply bg-grid-cell-hover;
+    @apply bg-grid-cell-hover shadow-sm;
   }
 
   .grid-cell-selected {
@@ -137,10 +137,10 @@
   }
 
   .grid-header {
-    @apply bg-grid-header-bg text-grid-header-fg font-semibold text-xs uppercase tracking-wide px-2 py-2 border border-grid-line text-center select-none;
+    @apply bg-grid-header-bg text-grid-header-fg font-semibold text-[11px] uppercase tracking-wider px-2 py-2.5 border border-grid-line text-center select-none;
   }
 
   .excel-toolbar {
-    @apply bg-card border-b border-border px-3 py-1.5 flex items-center gap-2;
+    @apply bg-card border-b border-border px-4 py-2 flex items-center gap-2;
   }
 }
