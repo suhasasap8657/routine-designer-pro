@@ -57,6 +57,22 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Grid tokens
+        "grid-line": "hsl(var(--grid-line))",
+        "grid-header-bg": "hsl(var(--grid-header-bg))",
+        "grid-header-fg": "hsl(var(--grid-header-fg))",
+        "grid-cell-hover": "hsl(var(--grid-cell-hover))",
+        "grid-cell-selected": "hsl(var(--grid-cell-selected))",
+        "grid-cell-active": "hsl(var(--grid-cell-active))",
+        // Category colors
+        "cat-work": "hsl(var(--cat-work))",
+        "cat-exercise": "hsl(var(--cat-exercise))",
+        "cat-meals": "hsl(var(--cat-meals))",
+        "cat-sleep": "hsl(var(--cat-sleep))",
+        "cat-personal": "hsl(var(--cat-personal))",
+        "cat-study": "hsl(var(--cat-study))",
+        "cat-break": "hsl(var(--cat-break))",
+        "cat-other": "hsl(var(--cat-other))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,25 +81,22 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "cell-pop": {
+          "0%": { transform: "scale(0.95)", opacity: "0.7" },
+          "100%": { transform: "scale(1)", opacity: "1" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "cell-pop": "cell-pop 0.15s ease-out",
       },
     },
   },
